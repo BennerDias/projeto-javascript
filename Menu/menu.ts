@@ -1,11 +1,14 @@
 import { ProdutoController } from "../src/Controller/ProdutoController";
+import { InvalidOptionError } from "../src/errors/OpcaoInvalida";
 import { Computador } from "../src/Model/Computador";
 import { Smartphone } from "../src/Model/Smartphone";
 import { Colors } from "../src/util/Colors/colors";
 import leia from "readline-sync";
 
+
 export function main(){
     let produtos: ProdutoController = new ProdutoController();
+    let usuario: any
     let opcao: number;
 
     let id,  estoque, tipo: number
@@ -54,14 +57,30 @@ export function main(){
         Colors.reset);
 
         console.log("Entre com a opção desejada: ");
-        opcao = leia.questionInt("");
+
+        try{ 
+            usuario = leia.question("");
+            opcao = parseInt(usuario)
+
+            if(isNaN(opcao)){
+                throw new InvalidOptionError("Opção inválida! Digite apenas o número correspondente a opção desejada.")
+            }
+        } catch (error) {
+            if(error instanceof InvalidOptionError){
+                console.log(Colors.fg.red, `\n${error.message}\n`, Colors.reset)
+            } else {
+                console.log(Colors.fg.red, "\nErro inesperado!\n", Colors.reset);
+            }
+            keyPress()
+            continue
+        }
 
         if (opcao == 0) {
             console.log(Colors.fg.greenstrong, "\nObrigado por utilizar o nosso programa, até logo!");
             console.log(Colors.reset, "");
             process.exit(0);
         }
-
+        
         switch (opcao) {
             case 1:
                 console.log(Colors.fg.green, "\nCadastro de Produto\n", Colors.reset);
