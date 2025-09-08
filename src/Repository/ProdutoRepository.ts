@@ -1,7 +1,9 @@
+import { Produto } from "../Model/Produto";
+
 export interface ProdutoRepository {
-    buscarID(id: number): any | null
+    buscarID(id: number): void
     listar(): void;
-    salvar(produto: any): void
-    atualizar(id: number, produtoAtualizado: any): void
+    salvar(produto: Produto): void
+    atualizar(produto: Produto): void
     deletar(id: number): void
 }

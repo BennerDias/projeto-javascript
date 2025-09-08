@@ -1,14 +1,16 @@
 export abstract class Produto {
     private _id: number
     private _nome: string
-    private _preco: number
+    private _preco: string
     private _estoque: number
+    private _tipo: number
     
-    constructor(id: number, nome: string, preco: number, estoque: number){
+    constructor(id: number, nome: string, preco: string, estoque: number, tipo: number){
         this._id = id
         this._nome = nome
         this._preco = preco
         this._estoque = estoque
+        this._tipo = tipo
     }
 
     public get id(){
@@ -31,7 +33,7 @@ export abstract class Produto {
         return this._preco
     }
 
-    public set preco(preco: number){
+    public set preco(preco: string){
         this._preco = preco
     }
 
@@ -43,10 +45,31 @@ export abstract class Produto {
         this._estoque = estoque
     }
 
+    public get tipo (){
+        return this._tipo
+    }
+
+    public set tipo(tipo: number){
+        this._tipo = tipo
+    }
+    
+
     public listar(): void {
-        console.log(`ID: ${this.id}`)
-        console.log(`Nome: ${this.nome}`)
-        console.log(`Preço: R$${this.preco.toFixed(2)}`)
-        console.log(`Estoque: ${this.estoque} unidades`)
+        let tipo: string = '';
+
+        switch (this._tipo){
+            case 1:
+                tipo = 'Computador'
+                break
+            case 2:
+                tipo = 'Smartphone'
+                break
+            }
+
+            console.log(`ID: ${this.id}`)
+            console.log(`Nome: ${this.nome}`)
+            console.log(`Preço: R$${this.preco}`)
+            console.log(`Estoque: ${this.estoque} unidades`)
+            console.log(`Tipo: ${tipo}`)
     }
 }
